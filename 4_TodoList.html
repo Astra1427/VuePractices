@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>TotoList</title>
+    <script src="./vue-2.6.14/dist/vue.js"></script>
+    <style>
+        .done{
+            text-decoration:line-through;
+        }
+    </style>
+</head>
+<body>
+    <div id="App">
+        <input type="text" name="txtTitle" v-model:value="txtTitleText" placeholder="please input title" />
+        <input type="text" name="txtContent" v-model:value="txtContentText" placeholder="please input content" />
+        <button @click="PublishEvent">publish</button>
+        <ul>
+            <li>
+                <div v-for="(item,index) in TodoLists" :key="item.ID" :ID="item.ID" :index="item.index">
+                    <h3 :class="{done:item.completed}">{{item.ID+"."+item.title}}</h3>
+                    <p :class="{done:item.completed}">{{item.content+" - "+GetDateTime(item.CreateTime)}}</p>
+                    <a :class="{done:item.completed}" href="#" @click="CompletedEvent(item.ID)">完成</a>
+                    <a :class="{done:item.completed}" href="#" style="color:red;" @click="RemoveTodoEvent(item.ID)">删除</a>
+                </div>
+                <!--<Todo-Item></Todo-Item>-->
+            </li>
+        </ul>
+    </div>
+
+    <script> 
+        
+        Vue.component("TodoItem",{
+            template: ``,
+            props:["title","content"]
+
+        });
+        var vm = new Vue({
+            el: "#App",
+            data: {
+                txtTitleText:'',
+                txtContentText: '',
+                TodoLists: [],
+                TodoIDIndex:1,
+            },
+            computed: {
+                
+            },
+            methods: {
+                PublishEvent() {
+                    this.TodoLists.push(new Todo(this.TodoIDIndex++,this.txtTitleText,this.txtContentText));
+                },
+                RemoveTodoEvent(ID) {
+                    var arr = this.TodoLists.filter(a => a.ID == ID);
+                    this.TodoLists.splice(this.TodoLists.indexOf(arr[0]),1);
+                },
+                CompletedEvent(ID) {
+                    var todo = this.TodoLists.filter(a => a.ID == ID)[0];
+                    todo.completed = !todo.completed;
+                },
+                GetDateTime(time) {
+                    console.log(time);
+                    return time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+                }
+            }
+        });
+
+        class Todo {
+            constructor(ID,title, content) {
+                this.ID = ID;
+                this.title = title;
+                this.content = content;
+                this.completed = false;
+                this.CreateTime = new Date();
+            }
+        }
+    </script>
+</body>
+</html>

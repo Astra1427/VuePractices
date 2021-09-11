@@ -23,8 +23,9 @@
 <body>
     <div id="App">
         <ul>
-            <li v-for="(item , index) in items" :key="index" :class="{even:(index%2==0),odd:(index%2!=0)}">{{item.content+"."+($index)}}</li>
+            <li v-for="(item , index) in items" :class="{even:(index%2==0),odd:(index%2!=0)}">{{item.content+"."}}</li>
         </ul>
+        <button @click="clearItemsEvent">Clear</button>
     </div>
 
     <script>
@@ -32,6 +33,16 @@
             el: "#App",
             data: {
                 items:[]
+            },
+            methods: {
+                clearItemsEvent() {
+                    //this.items.pop();//Remove last
+                    //this.items.shift();//Remove first
+
+                    //Vue.set(this.items,'0',new ItemObj(0,'hello'));//update 
+
+                    console.log(this);
+                }
             }
 
         });
