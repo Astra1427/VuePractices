@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="./vue-2.6.14/dist/vue.js"></script>
+</head>
+<body>
+    <div id="App" @keydown.enter="enterEvent">
+        <input type="text" name="name" value="" />
+        <input type="text" name="name" value="" />
+        <input type="text" name="name" value="" />
+        <input type="text" name="name" value="" />
+        <article-item v-for="item in articles" :title="item.title" :content="item.content" >
+        </article-item>
+
+        <img v-show="IsImgShow" :src="imgSrc" alt="Alternate Text" />
+        
+        <button @click="clickMe">click</button>
+    </div>
+
+    <script>
+
+        Vue.component("articleItem", {
+            template: `<div>
+                        <h3>{{title}}</h3>
+                        <p>{{content}}</p>
+                    </div>`,
+            props: ["title", "content"],
+        });
+
+        var vm = new Vue({
+            el: "#App",
+            data: {
+                text: "this is content",
+                articles: [
+                    { title: "title", content: "content1" },
+                    { title: "title", content: "content2" },
+                    { title: "title", content: "content3" },
+                    { title: "title", content: "content4" },
+                ],
+                imgSrc: "http://gdown.baidu.com/img/0/200_200/1c7d0637ca01803040e087fb44e47654.png",
+                IsImgShow :false,
+            },
+            methods: {
+                clickMe() {
+                    this.IsImgShow = !this.IsImgShow;
+                },
+                enterEvent() {
+                    alert("enter");
+                }
+            }
+        });
+
+        window.onload = function () {
+            var vueApp = document.getElementById("App");
+            vueApp.focus();
+        };
+
+
+    </script>
+</body>
+</html>

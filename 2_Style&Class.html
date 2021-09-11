@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="./vue-2.6.14/dist/vue.js"></script>
+    <style>
+        ul{
+            list-style:none;
+            width:100px;
+        }
+        .odd{
+            background-color:black;
+            color:white;
+        }
+        .even {
+            background-color: yellow;
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <div id="App">
+        <ul>
+            <li v-for="(item , index) in items" :key="index" :class="{even:(index%2==0),odd:(index%2!=0)}">{{item.content+"."+($index)}}</li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#App",
+            data: {
+                items:[]
+            }
+
+        });
+
+        class ItemObj{
+            constructor(id, content) {
+                this.id = id;
+                this.content = content;
+            }
+        }
+
+        for (var i = 0; i < 100; i++) {
+            vm.items.push(new ItemObj(i + 1, "i23tem" + (i + 1)));
+        }
+    </script>
+
+</body>
+</html>
